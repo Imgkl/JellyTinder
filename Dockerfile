@@ -4,10 +4,15 @@
 FROM node:22-alpine AS web
 WORKDIR /app
 RUN corepack enable
-# Bring .npmrc with the manifest so pnpm honours the supply-chain policy
-# overrides (minimum-release-age=0) when it resolves the lockfile.
+# pnpm 11 enforces a 24h minimum-release-age supply-chain check by default
+# that flags transitive deps published yesterday. The lockfile is our
+# supply-chain anchor; disable the extra heuristic via CLI config.
 COPY frontend/package.json frontend/pnpm-lock.yaml* frontend/.npmrc* ./
-RUN if [ -f pnpm-lock.yaml ]; then pnpm install --frozen-lockfile; else pnpm install; fi
+RUN if [ -f pnpm-lock.yaml ]; then \
+      pnpm install --frozen-lockfile --config.minimumReleaseAge=0; \
+    else \
+      pnpm install --config.minimumReleaseAge=0; \
+    fi
 COPY frontend/ ./
 RUN pnpm build
 
