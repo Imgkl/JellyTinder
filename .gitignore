@@ -1,0 +1,9 @@
+node_modules
+frontend/dist
+backend/public/*
+!backend/public/.gitkeep
+data
+*.local
+.DS_Store
+.idea
+.vscode

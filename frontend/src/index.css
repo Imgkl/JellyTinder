@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+@theme {
+  /* Editorial Light — pure white, neutral greys, muted oxblood danger.
+     Direct port of nocturne-web's design tokens so the two apps feel sibling. */
+  --color-bg: #ffffff;
+  --color-surface: #fafafa;
+  --color-border: #e5e5e5;
+  --color-border-hover: #d4d4d4;
+  --color-muted: #737373;
+  --color-text: #0a0a0a;
+  --color-text-dim: #404040;
+
+  --color-danger: #991b1b;
+
+  --font-serif: "EB Garamond", Georgia, serif;
+  --font-sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "JetBrains Mono", monospace;
+
+  --radius-DEFAULT: 0px;
+  --radius-xs: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+
+  --tracking-wider: 0.12em;
+  --tracking-widest: 0.18em;
+}
+
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.fade-mask-x {
+  mask-image: linear-gradient(to right, transparent, #000 16px, #000 calc(100% - 16px), transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 16px, #000 calc(100% - 16px), transparent);
+}
+
+/* Marching-ants — the signature interaction. Dashed border animates clockwise on hover. */
+@keyframes btn-line-march {
+  to {
+    background-position: 12px 0, 100% 12px, -12px 100%, 0 -12px;
+  }
+}
+
+.btn-line-animated:hover:not(:disabled) {
+  border-color: transparent;
+  background-image:
+    linear-gradient(90deg, var(--color-text) 50%, transparent 50%),
+    linear-gradient(0deg, var(--color-text) 50%, transparent 50%),
+    linear-gradient(90deg, var(--color-text) 50%, transparent 50%),
+    linear-gradient(0deg, var(--color-text) 50%, transparent 50%);
+  background-size: 12px 1px, 1px 12px, 12px 1px, 1px 12px;
+  background-repeat: repeat-x, repeat-y, repeat-x, repeat-y;
+  background-position: 0 0, 100% 0, 0 100%, 0 0;
+  background-origin: border-box;
+  background-clip: border-box;
+  animation: btn-line-march 0.8s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-line-animated:hover:not(:disabled) {
+    animation: none;
+    border-color: var(--color-text);
+    border-style: dashed;
+    background-image: none;
+  }
+}
+
+/* Swipe card — disables scroll/select while dragging, gives the cursor the right feel. */
+.swipe-card { touch-action: none; user-select: none; -webkit-user-select: none; }
+.swipe-card.is-dragging { cursor: grabbing; }
