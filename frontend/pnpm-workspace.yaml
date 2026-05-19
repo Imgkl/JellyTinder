@@ -1,0 +1,5 @@
+# pnpm 11+ moved settings out of package.json. This is where settings live now,
+# even for single-package (non-workspace) repos.
+onlyBuiltDependencies:
+  - esbuild
+minimumReleaseAge: 0

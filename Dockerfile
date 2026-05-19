@@ -7,7 +7,7 @@ RUN corepack enable
 # pnpm 11 enforces a 24h minimum-release-age supply-chain check by default
 # that flags transitive deps published yesterday. The lockfile is our
 # supply-chain anchor; disable the extra heuristic via CLI config.
-COPY frontend/package.json frontend/pnpm-lock.yaml* frontend/.npmrc* ./
+COPY frontend/package.json frontend/pnpm-lock.yaml* frontend/.npmrc* frontend/pnpm-workspace.yaml* ./
 RUN if [ -f pnpm-lock.yaml ]; then \
       pnpm install --frozen-lockfile --config.minimumReleaseAge=0; \
     else \
