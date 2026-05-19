@@ -4,7 +4,9 @@
 FROM node:22-alpine AS web
 WORKDIR /app
 RUN corepack enable
-COPY frontend/package.json frontend/pnpm-lock.yaml* ./
+# Bring .npmrc with the manifest so pnpm honours the supply-chain policy
+# overrides (minimum-release-age=0) when it resolves the lockfile.
+COPY frontend/package.json frontend/pnpm-lock.yaml* frontend/.npmrc* ./
 RUN if [ -f pnpm-lock.yaml ]; then pnpm install --frozen-lockfile; else pnpm install; fi
 COPY frontend/ ./
 RUN pnpm build
