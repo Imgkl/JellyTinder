@@ -1,5 +1,7 @@
-# pnpm 11+ moved settings out of package.json. This is where settings live now,
-# even for single-package (non-workspace) repos.
+# pnpm 11 settings — must live here, not in package.json.
+# We're in an isolated docker stage building a vetted lockfile from a public
+# repo; loosen pnpm's defensive defaults so deps install cleanly.
+minimumReleaseAge: 0
 onlyBuiltDependencies:
   - esbuild
-minimumReleaseAge: 0
+dangerouslyAllowAllBuilds: true
